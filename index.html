@@ -1,0 +1,2486 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="./bootstrap/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./bootstrap/bootstrap5.min.css">
+	<link rel="stylesheet" href="./css/style.css">
+
+	<title>Reserach paper</title>
+	<link rel="icon"  href="./images/icons/paper.png">
+</head>
+<body>
+
+<h1 class="text-center">A UNIFIED APPROACH TO CONDITIONAL AUDIO SOURCE SEPARATION AND DETECTION</h1>
+<hr>
+<p class="text-center">
+	<b>Author : </b>
+</p>
+
+<p class="text-center">
+	<b>About : </b>We address the problem of separating classes of sound
+sources given 1) an audio mixture and 2) a conditional that
+represents the desired source to be separated. The proposed
+Source Separation and Detection Network (SSDNet) operates
+on a defined set of classes during training and inference. We
+show that our model is versatile in that it can be repurposed
+for various separation tasks. We demonstrate its capability
+for conditional audio source separation on the NIGENS
+dataset of general sound events. We also show that, without
+modification, the model can perform speech and non-speech
+component separation using mixtures from the LibriSpeech
+and FSD50k datasets. Finally, a key feature of the proposed
+SSDNet is that it performs detection in addition to separation,
+making it a unified solution for query-based audio analysis.
+</p>
+<hr>
+
+
+<nav class="navbar navbar-expand-sm bg-light justify-content-center">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link fs-3 text-center" aria-current="page" href="#none">NIGENS<br> <p class="fs-6">one-hot</p></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link fs-3 text-center" aria-current="page" href="#ncon">NIGENS <br> <p class="fs-6"> wave conditional</p></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link fs-3 text-center" href="#sonly">Speech <br> <p class="fs-6">component separation</p></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link fs-3 text-center" href="#nsonly">Non-Speech <br> <p class="fs-6">component separation</p></a>
+    </li>
+  </ul>
+</nav>
+
+<!-- nigen one-hot -->
+<!-- ########################################################################################################### -->
+
+<div class="col-md-11 col-lg-11 mb-11 d-flex mx-auto" id="none">
+
+<table class="table table-bordered table-hover text-center border-secondary">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h2 > NIGENS one-hot </h2>
+			</th>
+		</tr>
+	</thead>
+	
+  <tbody>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/12/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/12/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/12/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/12/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/12/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/12/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/61/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/61/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/61/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/61/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/61/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/61/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/73/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/73/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/73/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/73/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/73/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/73/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/76/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/76/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/76/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/76/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/76/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/76/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/81/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/81/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/81/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/81/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/81/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/81/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/94/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/94/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/94/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/94/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/94/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/94/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/100/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/100/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/100/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/100/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/100/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/100/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/102/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/102/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/102/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/102/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/102/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/102/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/116/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/116/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/116/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/116/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/116/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/116/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/130/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/130/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/130/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/130/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/130/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/130/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/133/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/133/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/133/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/133/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/133/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/133/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/152/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/152/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/152/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/152/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/152/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/152/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/169/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/169/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/169/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/169/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/169/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/169/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/178/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/178/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/178/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/178/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/178/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/178/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/190/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/190/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/190/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/190/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/190/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/190/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/237/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/237/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/237/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/237/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/237/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/237/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/275/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/275/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/275/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/275/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/275/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/275/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/286/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/286/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/286/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/286/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/286/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/286/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/324/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/324/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/324/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/324/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/324/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/324/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/333/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/333/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/333/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/333/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/333/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/333/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/363/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/363/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/363/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/363/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/363/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/363/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/372/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/372/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/372/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/372/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/372/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/372/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/391/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/391/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/391/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/391/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/391/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/391/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/410/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/410/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/410/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/410/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/410/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/410/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/439/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/439/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/439/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/439/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/439/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/439/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/441/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/441/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/441/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/441/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/441/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/441/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/443/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/443/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/443/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/443/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/443/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/443/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/446/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/446/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/446/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/446/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/446/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/446/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/483/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/483/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/483/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/483/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/483/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/483/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/502/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/502/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/502/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/502/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/502/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/502/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/521/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/521/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/521/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/521/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/521/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/521/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/536/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/536/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/536/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/536/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/1hot.jpeg" width="315" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/ohot/536/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/ohot/536/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  </tbody>
+</table>
+</div>
+
+<!-- nigen one-hot -->
+<!-- ########################################################################################################### -->
+
+
+
+<!-- nigen conditional -->
+
+<!-- ############################################################################################################### -->
+
+
+<div class="col-md-11 col-lg-11 mb-11 d-flex mx-auto" id="ncon">
+
+<table class="table table-bordered table-hover text-center border-secondary ">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h2 > NIGENS wave conditional </h2>
+			</th>
+		</tr>
+	</thead>
+	
+  <tbody>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/77/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/77/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/77/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/77/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/77/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/77/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/77/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/77/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/96/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/96/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/96/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/96/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/96/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/96/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/96/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/96/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/135/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/135/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/135/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/135/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/135/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/135/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/135/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/135/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/217/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/217/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/217/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/217/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/217/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/217/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/217/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/217/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/255/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/255/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/255/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/255/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/255/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/255/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/255/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/255/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/314/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/314/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/314/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/314/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/314/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/314/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/314/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/314/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/385/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/385/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/385/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/385/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/385/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/385/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/385/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/385/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/391/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/391/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/391/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/391/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/391/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/391/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/391/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/391/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/468/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/468/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/468/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/468/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/468/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/468/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/468/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/468/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/483/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/483/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/483/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/483/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/483/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/483/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/483/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/483/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+
+  	  	<tr style="vertical-align: middle;">
+  		<th>Clean Sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/509/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/509/cleanFile.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/509/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/509/input_mixture.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional waveform</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/509/conditionalWav.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/509/conditionalWav.png" width="215" height="104"></td>
+
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/nigen/wavCond/509/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/nigen/wavCond/509/pred_separation.png" width="215" height="104"></td>
+  		
+  	</tr>
+
+  	
+  </tbody>
+</table>
+
+</div>
+
+<!-- ncon only -->
+<!-- ############################################################################################################### -->
+
+
+<!-- speech only -->
+<!-- ############################################################################################################### -->
+
+
+
+<div class="col-md-11 col-lg-11 mb-11 d-flex mx-auto" id="sonly">
+
+<table class="table table-bordered table-hover text-center border-secondary ">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h2 > Speech component separation </h2>
+			</th>
+		</tr>
+	</thead>
+	
+  <tbody>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/0/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/0/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/0/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/0/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/0/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/0/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/96/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/96/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/96/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/96/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/96/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/96/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/134/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/134/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/134/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/134/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/134/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/134/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/232/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/232/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/232/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/232/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/232/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/232/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/239/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/239/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/239/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/239/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/239/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/239/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/328/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/328/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/328/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/328/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/328/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/328/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/391/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/391/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/391/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/391/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/391/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/391/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/403/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/403/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/403/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/403/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/403/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/403/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/423/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/423/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/423/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/423/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/423/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/423/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/461/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/461/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/461/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/461/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/461/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/461/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/622/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/622/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/622/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/622/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/622/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/622/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/661/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/661/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/661/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/661/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/661/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/661/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/1677/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/1677/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/1677/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/1677/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/1677/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/1677/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/1841/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/1841/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/1841/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/1841/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/1841/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/1841/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/2709/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/2709/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/2709/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/2709/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/2709/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/2709/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/3284/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/3284/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/3284/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/3284/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/3284/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/3284/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7674/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7674/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7674/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7674/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7674/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7674/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7713/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7713/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7713/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7713/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7713/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7713/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7743/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7743/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7743/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7743/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/7743/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/7743/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9171/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9171/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9171/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9171/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9171/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9171/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9416/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9416/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9416/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9416/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9416/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9416/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9434/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9434/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9434/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9434/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9434/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9434/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9492/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9492/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9492/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9492/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9492/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9492/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9496/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9496/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9496/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9496/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9496/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9496/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9630/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9630/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9630/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9630/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9630/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9630/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9673/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9673/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9673/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9673/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9673/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9673/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9684/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9684/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9684/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9684/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9684/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9684/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9704/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9704/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9704/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9704/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/s1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MSpeechOnly/9704/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MSpeechOnly/9704/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+
+  	
+
+  </tbody>
+</table>
+
+</div>
+
+<!-- speech only -->
+<!-- ############################################################################################################### -->
+
+
+
+<div class="col-md-11 col-lg-11 mb-11 d-flex mx-auto" id="nsonly">
+
+<table class="table table-bordered table-hover text-center border-secondary ">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h2 > Non-Speech component separation </h2>
+			</th>
+		</tr>
+	</thead>
+	
+  <tbody>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9718/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9718/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9718/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9718/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9718/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9718/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9856/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9856/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9856/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9856/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9856/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9856/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9919/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9919/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9919/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9919/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9919/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9919/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9977/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9977/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9977/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9977/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/9977/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/9977/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10054/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10054/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10054/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10054/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10054/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10054/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10092/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10092/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10092/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10092/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10092/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10092/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10149/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10149/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10149/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10149/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10149/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10149/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10210/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10210/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10210/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10210/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10210/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10210/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10895/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10895/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10895/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10895/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/10895/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/10895/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11453/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11453/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11453/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11453/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11453/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11453/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11498/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11498/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11498/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11498/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11498/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11498/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11594/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11594/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11594/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11594/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11594/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11594/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11829/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11829/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11829/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11829/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/11829/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/11829/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/13053/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/13053/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/13053/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/13053/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/13053/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/13053/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/13821/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/13821/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/13821/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/13821/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/13821/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/13821/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/18974/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/18974/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/18974/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/18974/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/18974/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/18974/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+  	<tr>
+  		<td colspan="3">
+  			<hr>
+  		</td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Clean sample</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/19319/cleanFile.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/19319/cleanFile.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Input mixture</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/19319/input_mixture.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/19319/input_mixture.png" width="215" height="104"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Conditional</th>
+  		<td colspan="2"><img src="./images/ns1hot.jpeg" width="395" height="70"></td>
+  	</tr>
+  	<tr style="vertical-align: middle;">
+  		<th>Separated</th>
+  		<td><audio controls="controls" src="./assets/forWebsite/speech_work/5MNoiseOnly/19319/pred_separation.wav"></audio></td>
+  		<td><img src="./assets/forWebsite/speech_work/5MNoiseOnly/19319/pred_separation.png" width="215" height="104"></td>
+  	</tr>
+
+ 
+
+  </tbody>
+</table>
+
+</div>
+
+
+
+<!-- non-speech only -->
+#####################################################################################################################
+
+
+
+
+
+
+
+
+</body>
+</html>
