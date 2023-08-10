@@ -28,6 +28,17 @@ device = 'cpu'
 
 print(device)
 
+'''
+The given code snippet defines a function named my_returnNormedVector_oneSam_efficient that takes a 2-dimensional tensor A as input (usually considered as a batch of samples where the first dimension represents the batch size, and the second dimension represents the feature values or channels).
+
+Here's the step-by-step explanation of what the code does:
+
+Subtract the Minimum: The line A -= A.min(dim=1, keepdim=True)[0] subtracts the minimum value of A along the first dimension (i.e., for each row or sample) from all elements in the corresponding row. The dim=1 specifies that the operation is to be done along the second dimension (indexing starts at 0), and the keepdim=True ensures that the result retains the original number of dimensions, allowing for proper broadcasting. This effectively translates the values in each row so that the minimum value in that row becomes zero.
+
+Divide by the Maximum: The line A /= A.max(dim=1, keepdim=True)[0] divides A by its maximum value along the first dimension (i.e., for each row or sample). Similar to the subtraction step, this operation is performed for each row individually, scaling the values in that row so that the maximum value becomes one.
+
+The result of these two operations is a normalized version of the input tensor A, where, for each row or sample, the values are rescaled to fall within the range [0, 1]. This kind of normalization is often used in machine learning and data preprocessing to standardize the scale of features, making them comparable across different dimensions or channels.
+'''
 
 def my_returnNormedVector_oneSam_efficient(A):
     # Subtract the minimum value of A along the first dimension (across channels)
